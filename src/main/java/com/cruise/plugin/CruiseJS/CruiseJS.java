@@ -20,15 +20,17 @@ public class CruiseJS implements PluginInterface{
     	pmd = new PlugInMetaData("CruiseJS","0.0.1","SJC","Serverside scripting engine");
     	
     	pmd.getActions().add(new Action("info", "getPlugin Information"));
-    	pmd.getActions().get(0).getActionParams().add(new ActionParameter("None","false","unknown","Unused Parameter"));
+    	pmd.getActions().get(0).getActionParams().add(new ActionParameter("service","true","CruiseJSGetInfo","Unique name defaults to a GUID. You can override."));
+    	pmd.getActions().get(0).getActionParams().add(new ActionParameter("None","false","unknown","Unused Sample Parameter"));
     	
     	pmd.getActions().add(new Action("CruiseTest", "Test API Call"));
-		pmd.getActions().get(1).getActionParams().add(new ActionParameter("Sample","false","unknown","Unused Parameter"));
+    	pmd.getActions().get(1).getActionParams().add(new ActionParameter("service","true","*UUID","Unique name defaults to a GUID. You can override."));
+		pmd.getActions().get(1).getActionParams().add(new ActionParameter("Sample","false","unknown","Unused Sample Parameter"));
 		
     	pmd.getActions().add(new Action("RunScript", "get information about the pluging"));
+    	pmd.getActions().get(2).getActionParams().add(new ActionParameter("service","true","*UUID","Unique name defaults to a GUID. You can override."));
     	pmd.getActions().get(2).getActionParams().add(new ActionParameter("Script","true","unknown","Java Script code to execute on the server."));
  
-
 	}
 	@Override
 	public PlugInMetaData getPlugInMetaData() {
