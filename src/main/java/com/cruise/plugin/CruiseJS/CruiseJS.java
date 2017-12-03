@@ -3,6 +3,8 @@ package com.cruise.plugin.CruiseJS;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+
+import com.corecruise.core.CoreCruise;
 import com.corecruise.cruise.SessionObject;
 import com.corecruise.cruise.logging.Clog;
 import com.corecruise.cruise.services.interfaces.PluginInterface;
@@ -15,9 +17,9 @@ import com.cruise.plugins.PlugInMetaData;
 public class CruiseJS implements PluginInterface{
 	PlugInMetaData pmd = null;
 	private ScriptEngineManager sem = null;
-	private ScriptEngine se = null;
+	//private ScriptEngine se = null;
 	public CruiseJS() {
-    	pmd = new PlugInMetaData("CruiseJS","0.0.1","SJC","Serverside scripting engine");
+    	pmd = new PlugInMetaData("CruiseJS","0.0.1","SJC","Serverside scripting engine. Three core objects are created and are available to the script engine: cruRespone, cruSession, and cruService.");
     	
     	pmd.getActions().add(new Action("info", "getPlugin Information"));
     	pmd.getActions().get(0).getActionParams().add(new ActionParameter("service","true","CruiseJSGetInfo","Unique name defaults to a GUID. You can override."));
@@ -57,11 +59,13 @@ public class CruiseJS implements PluginInterface{
 		case "CruiseTest":
 			gsr.addParmeter("PluginEnabled", "true");
 			so.appendToResponse(service.Service()+"."+service.Action(),gsr);
+			ret = true;
 			break;
 		case "RunScript":
 			String script = service.Parameter("Script");
 			if(null != script) {
-				gsr.addParmeter("Results", runScript(so, gsr, script).toString());
+				gsr.addParmeter("Results", runScript(so, gsr, service, script).toString());
+				ret = true;
 			}else {
 				gsr.addParmeter("Results", "100 No Script Found.");
 			}
@@ -73,17 +77,22 @@ public class CruiseJS implements PluginInterface{
 		return ret;
 
 	}
-	private Boolean runScript(SessionObject so, GenericSessionResp gsr, String script) {
+	private Boolean runScript(SessionObject so, GenericSessionResp gsr, Services s, String script) {
 		boolean ret = false;
 		if(null == sem ) {
 			sem = new ScriptEngineManager();
-			se = sem.getEngineByName("nashorn");
+			
 		}
+		
 		try {
+			ScriptEngine se = sem.getEngineByName("nashorn");
 			if(null != script) {
-				se.put("sessionObject", so);
-				se.put("responseObject", gsr);
+				se.put("cruCore", new CoreCruise());
+				se.put("cruSession", so);
+				se.put("cruResponse", gsr);
+				se.put("cruService", s);
 				se.eval(script);
+			    ret = true;
 			}else {
 				gsr.addParmeter("Results", "200 No Script Found.");
 			}
