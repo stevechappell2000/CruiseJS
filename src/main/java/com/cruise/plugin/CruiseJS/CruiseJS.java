@@ -26,11 +26,11 @@ public class CruiseJS implements PluginInterface{
     	pmd.getActions().get(0).getActionParams().add(new ActionParameter("None","false","unknown","Unused Sample Parameter"));
     	
     	pmd.getActions().add(new Action("CruiseTest", "Test API Call"));
-    	pmd.getActions().get(1).getActionParams().add(new ActionParameter("service","true","*UUID","Unique name defaults to a GUID. You can override."));
+    	pmd.getActions().get(1).getActionParams().add(new ActionParameter("service","true","~UUID","Unique name defaults to a GUID. You can override."));
 		pmd.getActions().get(1).getActionParams().add(new ActionParameter("Sample","false","unknown","Unused Sample Parameter"));
 		
     	pmd.getActions().add(new Action("RunScript", "get information about the pluging"));
-    	pmd.getActions().get(2).getActionParams().add(new ActionParameter("service","true","*UUID","Unique name defaults to a GUID. You can override."));
+    	pmd.getActions().get(2).getActionParams().add(new ActionParameter("service","true","~UUID","Unique name defaults to a GUID. You can override."));
     	pmd.getActions().get(2).getActionParams().add(new ActionParameter("Script","true","unknown","Java Script code to execute on the server."));
  
 	}
