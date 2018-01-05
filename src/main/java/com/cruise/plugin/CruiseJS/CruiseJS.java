@@ -32,7 +32,8 @@ public class CruiseJS implements PluginInterface{
     	pmd.getActions().add(new Action("RunScript", "get information about the pluging"));
     	pmd.getActions().get(2).getActionParams().add(new ActionParameter("service","true","~UUID","Unique name defaults to a GUID. You can override."));
     	pmd.getActions().get(2).getActionParams().add(new ActionParameter("Script","true","unknown","Java Script code to execute on the server."));
- 
+ //   	pmd.getActions().get(2).getActionParams().add(new ActionParameter("Script","true","unknown","Java Script code to execute on the server."));
+
 	}
 	@Override
 	public PlugInMetaData getPlugInMetaData() {
