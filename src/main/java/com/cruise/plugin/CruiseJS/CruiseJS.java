@@ -6,6 +6,7 @@ import javax.script.ScriptEngineManager;
 
 import com.corecruise.core.CoreCruise;
 import com.corecruise.cruise.SessionObject;
+import com.corecruise.cruise.config.CruisePluginEnvironment;
 import com.corecruise.cruise.logging.Clog;
 import com.corecruise.cruise.services.interfaces.PluginInterface;
 import com.corecruise.cruise.services.utils.GenericSessionResp;
@@ -16,12 +17,16 @@ import com.cruise.plugins.PlugInMetaData;
 
 public class CruiseJS implements PluginInterface{
 	PlugInMetaData pmd = null;
+	String pluginName = "CruiseJS";
 	private ScriptEngineManager sem = null;
-	//private ScriptEngine se = null;
+	CruisePluginEnvironment config = null;
 	public CruiseJS() {
-    	pmd = new PlugInMetaData("CruiseJS","0.0.1","SJC","Serverside scripting engine. Three core objects are created and are available to the script engine: cruRespone, cruSession, and cruService.");
+		if(null == config)
+			config = CoreCruise.getCruiseConfig(pluginName);
+		
+    	pmd = new PlugInMetaData(pluginName,"0.0.1","SJC","Serverside scripting engine. Three core objects are created and are available to the script engine: cruRespone, cruSession, and cruService.");
     	
-    	pmd.getActions().add(new Action("info", "getPlugin Information"));
+    	pmd.getActions().add(new Action("plugInInfo", "getPlugin Information"));
     	pmd.getActions().get(0).getActionParams().add(new ActionParameter("service","true","CruiseJSGetInfo","Unique name defaults to a GUID. You can override."));
     	pmd.getActions().get(0).getActionParams().add(new ActionParameter("None","false","unknown","Unused Sample Parameter"));
     	
@@ -53,7 +58,7 @@ public class CruiseJS implements PluginInterface{
 		String action = service.Action();
 		GenericSessionResp gsr = new GenericSessionResp();
 		switch (action) {
-		case "info":
+		case "plugininfo":
 			so.appendToResponse(pmd);
 			ret = true;
 			break;
@@ -102,6 +107,16 @@ public class CruiseJS implements PluginInterface{
 			gsr.addParmeter("Results", "300 "+e.getMessage());
 		}
 		return ret;
+	}
+	@Override
+	public void byPass(SessionObject sessionObject) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean initPlugin() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
