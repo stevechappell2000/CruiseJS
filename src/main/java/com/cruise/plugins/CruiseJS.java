@@ -1,4 +1,4 @@
-package com.cruise.plugin.CruiseJS;
+package com.cruise.plugins;
 
 
 import javax.script.ScriptEngine;

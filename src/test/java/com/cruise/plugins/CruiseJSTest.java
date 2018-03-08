@@ -1,10 +1,11 @@
-package com.cruise.plugin.CruiseJS;
+package com.cruise.plugins;
 
 import com.corecruise.cruise.SessionObject;
 import com.corecruise.cruise.SessionObjectJSON;
 import com.corecruise.cruise.services.interfaces.PluginClientInterface;
 import com.corecruise.cruise.services.utils.Services;
 import com.corecruise.cruise.testharness.DummyValidator;
+import com.cruise.plugins.CruiseJS;
 
 import junit.framework.TestCase;
 
